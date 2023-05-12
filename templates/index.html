@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta property="og:title" content="My Personal Word List" />
+    <meta property="og:description" content="A collection of my words" />
+    <meta property="og:image" content="{{url_for('static', filename='logo_red.png')}}" />
+    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon" />
+    <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <title>Kudoou Word List</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+
+<body>
+    <!-- <h1>index.html</h1> -->
+    <script src="../static/index.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script>
+        let words = {{ words | tojson }};
+        let word_list = [];
+        for (let i = 0; i < words.length; i++) {
+            word_list.push(words[i].word)
+        }
+        // Jika value msgtersedia di string query, mari gunakan value tersebut untuk memunculkan suatu pesan popup ke user 
+        {% if msg %}
+        alert("{{ msg }}")
+        {% endif %}
+    </script>
+    <div class="wrap">
+        <div class="banner" onclick="window.location.href = '/';"></div>
+        <div class="search-box d-flex justify-content-center">
+            <input id="input-word" class="form-control" style="margin-right: 0.5rem" />
+            <button class="btn btn-light" onclick="find_word()"><i class="fa fa-search"></i>Search</button>
+        </div>
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-end">
+                <div>
+                    <h1 id="word" style="display: inline">{{ word }}</h1>
+                </div>
+            </div>
+
+            <div id="definition">
+                <div style="padding: 10px">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" style="width:30%">WORD</th>
+                                <th scope="col">MEANING</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody id="tbody-box">
+                            {% for word in words %}
+                            <tr id="word-{{word.word}}">
+                                <td>
+                                    <a href="/detail/{{word.word}}?status_give=old">
+                                        {{word.word}}
+                                    </a>
+                                </td>
+                                <td>{{word.definition}}></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <button id="btn-save" class="btn btn-sparta-outline btn-lg">
+                SAVE
+            </button>
+            <button id="btn-delete" class="btn btn-sparta btn-lg">
+                DELETE
+            </button>
+        </div>
+    </div>
+    <!-- end container -->
+    </div>
+    <!-- end wrap -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Tenth navbar example">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08"
+                aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/detail/keyword">Detail page</a>
+                    </li>
+                    <form>
+                        <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                    </form>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+
+</html>
